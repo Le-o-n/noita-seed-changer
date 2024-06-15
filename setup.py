@@ -3,14 +3,13 @@ from Cython.Build import cythonize
 import os
 import sysconfig
 
-# Find the path to the site-packages directory
-site_packages_path = sysconfig.get_path("purelib")
+root_dir = os.path.dirname(os.path.abspath(__file__))
+src_dir = os.path.join(root_dir, "src")
 
 libraries = ["User32", "Kernel32"]
 
 include_dirs = [
-    site_packages_path,
-    os.path.join(site_packages_path, 'virtual_memory_toolkit'),
+    src_dir
 ]
 
 # Define the extension module
