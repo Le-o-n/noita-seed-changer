@@ -9,14 +9,14 @@ site_packages_path = sysconfig.get_path("purelib")
 libraries = ["User32", "Kernel32"]
 
 include_dirs = [
-    site_packages_path,
-    os.path.join(site_packages_path, 'virtual_memory_toolkit'),
+    site_packages_path,  # Include the virtual_memory_toolkit directory
 ]
+
 # Define the extension module
 extensions = [
     Extension(
-        name="seed_hook",
-        sources=["seed_hook.pyx"],
+        name="seed_changer",
+        sources=["seed_changer.pyx"],
         include_dirs=include_dirs,
         language="c++",
         libraries=libraries
