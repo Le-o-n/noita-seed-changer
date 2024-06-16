@@ -1,3 +1,3 @@
-from seed_hook.seed_hook import main
+from seed_changer.seed_changer import main
 
 main()

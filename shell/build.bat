@@ -2,11 +2,12 @@
 setlocal enabledelayedexpansion
 
 set PYTHON_EXECUTABLE=python
-set SETUP="setup.py"
+set SETUP="./src/seed_changer/setup.py"
 
 cd /D "%~dp0"
 cd ..
 
-%PYTHON_EXECUTABLE% %SETUP% build_ext --inplace
+call ./shell/install_requirements.bat
+call ./shell/build_seed_changer.bat
 
-
+nuitka --follow-imports --output-dir=dist src/main.py --onefile
