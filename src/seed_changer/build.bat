@@ -6,4 +6,4 @@ set SETUP="setup.py"
 
 cd /D "%~dp0"
 
-python setup.py build_ext --inplace
+%PYTHON_EXECUTABLE% %SETUP% build_ext --inplace
