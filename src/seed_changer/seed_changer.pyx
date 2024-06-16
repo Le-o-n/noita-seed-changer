@@ -6,59 +6,74 @@ from virtual_memory_toolkit.process.process cimport CProcess, CProcess_init, CPr
 cimport seed_hook
 
 cdef int menu(CAppHandle* noita_handle, CVirtualAddress* seed_address, CVirtualAddress* seed_overwrite_address):
-
     cdef unsigned int new_seed
     cdef unsigned int read_seed
 
+    cdef unsigned int line_width = 43
+    
     choice = 0
-
     while choice != 3:
-        
-        print("Enter menu number:")
+        print("\n" + "="*line_width)
+        print("╔╗╔┌─┐┬┌┬┐┌─┐  ╔═╗┌─┐┌─┐┌┬┐  ╔╦╗┌─┐┌─┐┬  ")
+        print("║║║│ ││ │ ├─┤  ╚═╗├┤ ├┤  ││   ║ │ ││ ││  ")
+        print("╝╚╝└─┘┴ ┴ ┴ ┴  ╚═╝└─┘└─┘─┴┘   ╩ └─┘└─┘┴─┘")
+        print("="*line_width)
         print(" 1) Set seed.")
         print(" 2) View current seed.")
         print(" 3) Exit.")
+        print("="*line_width)
 
-        choice = input(": ")
+        choice = input("Enter menu number: ")
 
         try:
-            choice = int(choice) 
-        except TypeError:
-            print("Please enter a number...")
+            choice = int(choice)
+        except ValueError:
+            print("Please enter a valid number...")
             choice = -1
         
+        print("="*line_width)
         if choice == 1:
-            new_seed = get_new_seed()
+            new_seed = get_new_seed(line_width)
             if CVirtualAddress_write_int32(seed_overwrite_address, <const unsigned int>new_seed):
-                print("Unsuccessfully set new seed " + str(new_seed))
+                print(f"Unsuccessfully set new seed {new_seed}")
             else:
-                print("Successfully set new seed " + str(new_seed))
+                if new_seed == 0:
+                    print("Random generation of seeds restored")
+                else:
+                    print(f"Successfully set new seed {new_seed}")
+            print("="*line_width)
             input("Press ENTER to continue...")
             
         elif choice == 2:
-            if CVirtualAddress_read_int32(seed_overwrite_address, <int *>&read_seed):
-                print("Cannot read overwritten seed!")
+
+            if CVirtualAddress_read_int32(seed_address, <int*>&read_seed):
+                print("Cannot read seed!")
             else:
-                if not read_seed:
-                    if CVirtualAddress_read_int32(seed_address, <int*>&read_seed):
-                        print("Cannot read seed!")
-            
-            print("Current seed is " + str(read_seed))
+                print(f"Current seed is {read_seed}")
+
+            print("="*line_width)
             input("Press ENTER to continue...")
 
         elif choice == 3:
             CVirtualAddress_write_int32(seed_overwrite_address, <const int>0)
+            print("\nExiting...")
 
-cdef unsigned int get_new_seed():
+
+
+
+cdef unsigned int get_new_seed(unsigned int line_width):
     num = -1
 
     while num < 0:
         try:
             num = int(input("Enter new seed (0 to restore and exit).\n: "))
+            print("="*line_width)
             if num > 4_294_967_295:
                 num = 4_294_967_295
         except TypeError:
-            print("Please input a number")
+            print("="*line_width)
+            print("Please input a number!")
+            print("="*line_width)
             num = -1
     return <unsigned int>num
 
