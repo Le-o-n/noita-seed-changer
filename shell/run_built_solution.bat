@@ -7,4 +7,4 @@ set SETUP="./src/seed_changer/setup.py"
 cd /D "%~dp0"
 cd ..
 
-call "./dist/main.exe"
+call "./dist/NoitaSeedTool.exe"
