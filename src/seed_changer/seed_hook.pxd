@@ -49,7 +49,7 @@ cdef inline CVirtualAddress* get_seed_address(CAppHandle* noita_handle, CModule*
     return CVirtualAddress_init(noita_handle, <void*> seed_address)
     
 
-cdef inline CVirtualAddress* get_overwrite_address(CAppHandle* noita_handle, CModule* noita_module, CVirtualAddress* seed_address):
+cdef inline CVirtualAddress* get_seed_overwrite_address(CAppHandle* noita_handle, CModule* noita_module, CVirtualAddress* seed_address):
     
     if not noita_handle:
         return NULL
