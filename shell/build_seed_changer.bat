@@ -2,7 +2,7 @@
 setlocal enabledelayedexpansion
 
 set PYTHON_EXECUTABLE=python
-set SETUP="setup.py"
+set SETUP="./src/seed_changer/setup.py"
 
 cd /D "%~dp0"
 cd ..

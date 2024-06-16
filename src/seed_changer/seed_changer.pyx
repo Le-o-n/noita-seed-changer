@@ -26,19 +26,17 @@ cpdef int main():
     cdef CProcess* noita_process = CProcess_init(noita_handle)
     cdef CModule* noita_exe_module = CModule_from_process(noita_process, <const char*>noita_exe_string)
 
-
     cdef CVirtualAddress* seed_address = seed_hook.get_seed_address(noita_handle, noita_exe_module)
-
-    cdef CVirtualAddress* seed_overwrite_address = seed_hook.get_overwrite_address(noita_handle, noita_exe_module, seed_address)
+    cdef CVirtualAddress* seed_overwrite_address = seed_hook.get_seed_overwrite_address(noita_handle, noita_exe_module, seed_address)
 
     cdef unsigned int new_seed = 1
 
     while new_seed:
         new_seed = get_new_seed()
         if CVirtualAddress_write_int32(seed_overwrite_address, <const unsigned int>new_seed):
-            print(" Unsuccessfully tried to write new seed...")
+            print(" Unsuccessfully tried to write new seed " + str(new_seed))
         else:
-            print(" Successfully injected new seed...")
+            print(" Successfully injected new seed " + str(new_seed))
 
     CModule_free(noita_exe_module)
     CProcess_free(noita_process)

@@ -3,7 +3,8 @@ from Cython.Build import cythonize
 import os
 import sysconfig
 
-# Find the path to the site-packages directory
+file_dir = os.path.dirname(os.path.abspath(__file__))
+
 site_packages_path = sysconfig.get_path("purelib")
 
 libraries = ["User32", "Kernel32"]
@@ -23,6 +24,8 @@ extensions = [
     )
 ]
 
+
+os.chdir(file_dir)
 # Setup script to build the extension
 setup(
     ext_modules=cythonize(extensions),
