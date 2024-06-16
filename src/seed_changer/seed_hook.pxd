@@ -14,7 +14,7 @@ cdef inline CVirtualAddress* get_seed_address(CAppHandle* noita_handle, CModule*
     if not noita_handle:
         return NULL
 
-    cdef unsigned long long start_address = <unsigned long long>0x008833E0 #noita_exe_module[0].base_address
+    cdef unsigned long long start_address = <unsigned long long>noita_module[0].base_address #0x008833E0
     cdef unsigned long long end_address = <unsigned long long>start_address + <unsigned long long>noita_module[0].size
 
     cdef unsigned char[5] c_bytes
@@ -54,7 +54,7 @@ cdef inline CVirtualAddress* get_seed_overwrite_address(CAppHandle* noita_handle
     if not noita_handle:
         return NULL
 
-    cdef unsigned long long start_address = <unsigned long long>0x006E0000 #noita_exe_module[0].base_address
+    cdef unsigned long long start_address = <unsigned long long> noita_module[0].base_address #0x006E0000
     cdef unsigned long long end_address = <unsigned long long>start_address + <unsigned long long>noita_module[0].size
 
     cdef unsigned int seed_addr = <unsigned int>seed_address[0].address
