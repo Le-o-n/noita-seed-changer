@@ -5,7 +5,7 @@ from virtual_memory_toolkit.process.process cimport CProcess, CProcess_init, CPr
 
 
 cdef inline CAppHandle* get_noita_handle():
-    cdef char* window_title_substring = "Noita"
+    cdef char* window_title_substring = "Noita - Build"
     return CAppHandle_from_title_substring(<const char*> window_title_substring)
 
 

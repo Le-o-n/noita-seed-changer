@@ -10,4 +10,4 @@ cd ..
 call ./shell/install_requirements.bat
 call ./shell/build_seed_changer.bat
 
-nuitka --follow-imports --output-dir=dist src/main.py --onefile
+nuitka --follow-imports --output-dir=dist src/main.py --onefile --output-filename=NoitaSeedTool.exe

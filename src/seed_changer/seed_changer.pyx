@@ -62,7 +62,7 @@ cdef int menu(CAppHandle* noita_handle, CVirtualAddress* seed_address, CVirtualA
         elif choice == 3:
             CVirtualAddress_write_int32(seed_overwrite_address, <const int>0)
             print("\nExiting...")
-
+            input("Press ENTER to continue...")
 
 
 
