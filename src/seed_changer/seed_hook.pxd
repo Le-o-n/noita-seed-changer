@@ -1,5 +1,5 @@
 from virtual_memory_toolkit.handles.handle cimport CAppHandle, CAppHandle_from_title_substring, CAppHandle_free
-from virtual_memory_toolkit.memory.memory_structures cimport CVirtualAddress, CVirtualAddress_from_aob, CVirtualAddress_init, CVirtualAddress_write_int8_offset,CVirtualAddress_write_int32_offset, CVirtualAddress_offset, CVirtualAddress_read_int32_offset, CVirtualAddress_free
+from virtual_memory_toolkit.memory.memory_structures cimport CVirtualAddress, CVirtualAddress_from_aob, CVirtualAddress_init,CVirtualAddress_write_int32, CVirtualAddress_write_int8_offset,CVirtualAddress_write_int32_offset, CVirtualAddress_offset, CVirtualAddress_read_int32_offset, CVirtualAddress_free
 from virtual_memory_toolkit.memory.memory_structures cimport CModule, CModule_from_process, CModule_free
 from virtual_memory_toolkit.process.process cimport CProcess, CProcess_init, CProcess_free
 
@@ -44,9 +44,7 @@ cdef inline CVirtualAddress* get_seed_address(CAppHandle* noita_handle, CVirtual
 
     if CVirtualAddress_read_int32_offset(seed_set_opcode, &seed_address, <long long> 1):
         CVirtualAddress_free(seed_set_opcode)
-        print("Cannot read at offset")
         return NULL
-
     
     CVirtualAddress_free(seed_set_opcode)
 
@@ -54,41 +52,27 @@ cdef inline CVirtualAddress* get_seed_address(CAppHandle* noita_handle, CVirtual
     
 
 
-cdef inline bint enable_stop_seed_overwrite(CAppHandle* noita_handle, CVirtualAddress* seed_set_opcode):
+cdef inline bint enable_stop_seed_overwrite(CAppHandle* noita_handle, CVirtualAddress* seed_set_opcode, CVirtualAddress* seed_address):
 
     if not noita_handle:
         return 1
 
-    py_bytes = [
-        0x90,       # nop
-        0x90,       # nop
-        0x90,       # nop
-        0x90,       # nop
-        0x90        # nop
-    ]
-    cdef bint valid = False
-    for i, b in enumerate(py_bytes):
-        valid = valid or CVirtualAddress_write_int8_offset(seed_set_opcode, <const unsigned char>b, <long long>i)
+    cdef CVirtualAddress* duff_address = CVirtualAddress_init(noita_handle, seed_address[0].address)
+    CVirtualAddress_offset(duff_address, -8)
     
-    return not valid
+    return CVirtualAddress_write_int32_offset(seed_set_opcode, <const int>duff_address[0].address, <long long>1)
+    
 
 cdef inline bint disable_stop_seed_overwrite(CAppHandle* noita_handle, CVirtualAddress* seed_set_opcode, CVirtualAddress* seed_address):
 
     if not noita_handle:
         return 1
 
-    py_bytes = [
-        0xa3,       # mov [X], eax
-    ]
+    cdef bint valid = 0
 
-    print("seed address being written is " + hex(<unsigned long long>seed_address[0].address))
-
-    cdef bint valid = 1
-
-    valid = CVirtualAddress_write_int8_offset(seed_set_opcode, <const unsigned char>py_bytes[0], <long long>0) and valid
-    valid = CVirtualAddress_write_int32_offset(seed_set_opcode, <const int><unsigned long long>seed_address[0].address, <long long>1) and valid
+    return CVirtualAddress_write_int32_offset(seed_set_opcode, <const int><unsigned long long>seed_address[0].address, <long long>1)
     
-    return not valid 
+    
 
 
 
@@ -102,7 +86,12 @@ cdef inline int main():
     cdef CVirtualAddress* seed_set_opcode = find_seed_set_opcode(noita_handle, noita_exe_module)
     cdef CVirtualAddress* seed_address = get_seed_address(noita_handle, seed_set_opcode)
 
-    enable_stop_seed_overwrite(noita_handle, seed_set_opcode)
+    enable_stop_seed_overwrite(noita_handle, seed_set_opcode, seed_address)
+    input()
+
+    CVirtualAddress_write_int32(seed_address, <const int>69)
+
+
     input()
     disable_stop_seed_overwrite(noita_handle, seed_set_opcode, seed_address)
 
