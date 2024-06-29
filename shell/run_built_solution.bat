@@ -7,4 +7,8 @@ set SETUP="./src/seed_changer/setup.py"
 cd /D "%~dp0"
 cd ..
 
-call "./dist/NoitaSeedTool.exe"
+@echo off
+for %%i in ("./dist/*.exe") do (
+    call "./dist/%%i"
+    exit /b
+)
