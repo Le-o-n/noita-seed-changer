@@ -31,6 +31,7 @@ cdef int menu(CAppHandle* noita_handle, CVirtualAddress* seed_address, CVirtualA
             choice = int(choice)
         except ValueError:
             print("Please enter a valid number...")
+            input("Press ENTER to continue...")
             choice = -1
 
         os.system('cls')
@@ -61,8 +62,8 @@ cdef int menu(CAppHandle* noita_handle, CVirtualAddress* seed_address, CVirtualA
 
         elif choice == 3:
             CVirtualAddress_write_int32(seed_overwrite_address, <const int>0)
-            print("\nExiting...")
-            input("Press ENTER to continue...")
+            print("Exiting...")
+            
 
 
 
@@ -89,7 +90,7 @@ cpdef int main():
     if not noita_handle:
         print("Cannot get handle to Noita process...")
         print("Ensure that Noita is running and that you run as Administrator")
-        input("")
+        input("Press ENTER to exit...")
         return 1
     else:
         print("Successfully abtained handle to Noita...")
