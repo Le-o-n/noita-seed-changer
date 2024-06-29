@@ -2,4 +2,4 @@ wheel
 numpy
 cython
 nuitka
-virtual_memory_toolkit==1.0.0
+virtual_memory_toolkit==1.1.0
