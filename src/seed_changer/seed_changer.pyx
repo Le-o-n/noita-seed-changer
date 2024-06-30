@@ -77,9 +77,9 @@ cdef int menu(CAppHandle* noita_handle, CVirtualAddress* seed_address, CVirtualA
  /    / _ \/ / __/ _ `/ _\ \/ -_) -_) _  /   / / / _ \/ _ \/ / 
 /_/|_/\___/_/\__/\_,_/ /___/\__/\__/\_,_/   /_/  \___/\___/_/  """
 
-    title_calvin_s = """╔╗╔┌─┐┬┌┬┐┌─┐  ╔═╗┌─┐┌─┐┌┬┐  ╔╦╗┌─┐┌─┐┬  
-║║║│ ││ │ ├─┤  ╚═╗├┤ ├┤  ││   ║ │ ││ ││  
-╝╚╝└─┘┴ ┴ ┴ ┴  ╚═╝└─┘└─┘─┴┘   ╩ └─┘└─┘┴─┘"""
+    title_calvin_s = """ ╔╗╔┌─┐┬┌┬┐┌─┐  ╔═╗┌─┐┌─┐┌┬┐  ╔╦╗┌─┐┌─┐┬  
+ ║║║│ ││ │ ├─┤  ╚═╗├┤ ├┤  ││   ║ │ ││ ││  
+ ╝╚╝└─┘┴ ┴ ┴ ┴  ╚═╝└─┘└─┘─┴┘   ╩ └─┘└─┘┴─┘"""
 
     title_tmplr = """┳┓  •     ┏┓     ┓  ┏┳┓    
 ┃┃┏┓┓╋┏┓  ┗┓┏┓┏┓┏┫   ┃ ┏┓┏┓┃
@@ -152,7 +152,7 @@ cdef unsigned int get_new_seed(unsigned int line_width):
 
     while num < 0:
         try:
-            num = int(input(" Enter new seed (0 to restore to random)).\n : "))
+            num = int(input(" Enter new seed (0 to restore to random).\n : "))
             print("="*line_width)
             if num > 4_294_967_295:
                 num = 4_294_967_295
