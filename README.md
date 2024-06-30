@@ -76,4 +76,7 @@ def generate_seed(...):
 ```
 
 # License
+GPL v3 license, more information can be found [here](https://github.com/Le-o-n/noita-seed-changer/blob/main/LICENSE).
+
 # Credits
+All written, tested and deployed by me, [Leon Bass](https://github.com/Le-o-n).
