@@ -1,22 +1,25 @@
 # Noita Seed Changer
-
-This tool is designed to allow modifications to the seed during the runtime of the game without going through the modding framework. Crucially, this program still enables progression, such as unlocking achievements and new spells.
+This tool allows you to change your seed during the game while still enabling progression, such as unlocking new spells and achievements. Download the latest release from the [releases](https://github.com/Le-o-n/noita-seed-changer/releases) page.
 
 # Table of Contents
 - [Introduction](#introduction)
 - [Features](#features)
 - [Requirements](#requirements)
 - [Installation](#installation)
-- [Examples](#examples)
 - [How this works](#how-this-works)
 - [License](#license)
 - [Credits](#credits)
 
-# Features
-The key features of this tool are:
-- Setting a seed.
-- Viewing the current seed.
+# Introduction
+This tool allows you to change your seed during the game while still enabling progression, such as unlocking new spells and achievements.
 
+### Why is this Tool Unique?
+Unlike the [Noita Seed Changer](https://steamcommunity.com/sharedfiles/filedetails/?id=2284931352) workshop mod, which prevents progression in the game, this tool allows progression to continue. Other alternatives, such as [RNG42/NoitaSeedChanger](https://github.com/RNG42/NoitaSeedChanger) and [Start with custom seed by Luffy](https://modworkshop.net/mod/25898) require some setup to use and need to be loaded before the game starts. This tool uniquely can be run after the game has already started and does not require additional files, simply put this tool will edit the game's current code instead of loading new mod code making it much more compatible for future updates. 
+
+### Features
+- **Real-Time Code Modification:** This tool hooks onto the running code and modifies it as the game is running, avoiding the need to store files that the game loads before starting.
+- **Minimal Changes for Future-Proofing:** It only writes 4 bytes to memory, making it as future-proof as possible.
+- **Setting and Viewing Seeds:** Easily set a new seed and view the current seed within the game.
 
 # Requirements
 This tool only runs on Windows and has only been tested on an x64 architecture. The dependancy on windows comes from my library `virtual-memory-toolkit` ([github](https://github.com/Le-o-n/cython-virtual-memory-toolkit), [PyPi](https://pypi.org/project/virtual-memory-toolkit/))  relying completely on the Windows API to communicate with the process, there currently is no plan to include linux or macOS support.
@@ -51,25 +54,26 @@ python ./src/main.py
 ```
 
 # How this works
-This program scans the virtual memory of Noita for a specific set of opcodes (assembly instructions), these series of opcodes in this order are only found in a single function that is targeted, this function is responsible for writing to the seed address when you start up a new world. With the seed generation algorithm implemented in noita, the pseudo-code looks something like the following, although the actual code is acually in x86/x64 assembly:
+This program scans the virtual memory of Noita for a specific set of opcodes (assembly instructions), these series of opcodes in this order are only found in a single function that is targeted, this function is responsible for writing to the seed address when you start up a new world. With the seed generation algorithm implemented in noita, the pseudo-code looks something like the following, although the actual code is acually in x86/x64 assembly and much more complicated:
 ```python3
 def generate_seed(...):
   global seed
   seed = 0
   ...
-  if seed != 0:
-    return seed
-  seed = random_seed()
+  if seed == 0:
+    seed = random_seed()
   ...
 ```
-And this program will inject some code to change this pseudo-code to look like the following:
+And this program will inject some code to change this pseudo-code to look like the following, note that since the user defined seed will be non-zero, the seed never gets overwritten with a new random seed and instead will be kept as the user defined seed:
 ```python3
 def generate_seed(...):
   global seed
   seed = USER_DEFINED_SEED
   ...
-  if seed != 0:
-    return seed
-  seed = random_seed()
+  if seed == 0:
+    seed = random_seed()
   ...
 ```
+
+# License
+# Credits
