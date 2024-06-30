@@ -24,12 +24,32 @@ from virtual_memory_toolkit.process.process cimport CProcess, CProcess_init, CPr
 import os
 cimport seed_hook
 
+cdef void print_license():
+    print("""
+    Noita Seed Changer - A tool for changing the seed of the video game
+    "Noita" using runtime modifications the game's virtual memory.
+    Copyright (C) 2024  Leon Bass (https://github.com/Le-o-n)
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    See <https://www.gnu.org/licenses/> for more information.
+    """)
+    input("Press ENTER to continue...")
+
 cdef int menu(CAppHandle* noita_handle, CVirtualAddress* seed_address, CVirtualAddress* seed_overwrite_address):
     cdef unsigned int new_seed
     cdef unsigned int read_seed
 
     cdef unsigned int line_width = 43
-    
+    print_license()
     choice = 0
     while choice != 3:
         os.system('cls')
