@@ -54,7 +54,7 @@ python ./src/main.py
 ```
 
 # How this works
-This program scans the virtual memory of Noita for a specific set of opcodes (assembly instructions), these series of opcodes in this order are only found in a single function that is targeted, this function is responsible for writing to the seed address when you start up a new world. With the seed generation algorithm implemented in noita, the pseudo-code looks something like the following, although the actual code is acually in x86/x64 assembly and much more complicated:
+This program scans the virtual memory of Noita for a specific set of opcodes (assembly instructions). These opcodes, in this particular sequence, are found only in a single targeted function. This function is responsible for writing to the seed address when you start a new world. With the seed generation algorithm implemented in Noita, the pseudo-code resembles the following, although the actual code is written in x86/x64 assembly and is much more complex:
 ```python3
 def generate_seed(...):
   global seed
