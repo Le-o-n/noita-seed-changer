@@ -17,9 +17,11 @@ This tool allows you to change your seed during the game while still enabling pr
 Unlike the [Noita Seed Changer](https://steamcommunity.com/sharedfiles/filedetails/?id=2284931352) workshop mod, which prevents progression in the game, this tool allows progression and doesn't get detected by the game as a mod. Other alternatives, such as [RNG42/NoitaSeedChanger](https://github.com/RNG42/NoitaSeedChanger) and [Start with custom seed by Luffy](https://modworkshop.net/mod/25898) require some setup to use and need to be loaded before the game starts. This tool uniquely can be run after the game has already started and does not require additional files, simply put this tool will edit the game's current code instead of loading new mod code making it much more compatible for future updates. 
 
 ### Features
-- **Real-Time Code Modification:** This tool hooks onto the running code and modifies it as the game is running, avoiding the need to store files that the game loads before starting.
-- **Minimal Changes for Future-Proofing:** It only writes 4 bytes to memory, making it as future-proof as possible.
-- **Setting and Viewing Seeds:** Easily set a new seed and view the current seed within the game.
+
+- **Read and Write Seed**: Read the current world seed and force a seed value for all new worlds.
+- **Real-Time Code Modification**: The tool modifies the game code while it's running, eliminating the need for any mod installation.
+- **Future Proof**: The game code that is targeted is located within the running game's memory by using array of byte (AOB) scans, this means that as long as future updates don't modify these handful of opcodes this program will continue to work, making this as future-proof as possible.
+- **Progression-Friendly**: Continue unlocking new spells and achievements even after changing your seed.
 
 # Requirements
 This tool only runs on Windows and has only been tested on an x64 architecture. The dependancy on windows comes from my library `virtual-memory-toolkit` ([github](https://github.com/Le-o-n/cython-virtual-memory-toolkit), [PyPi](https://pypi.org/project/virtual-memory-toolkit/))  relying completely on the Windows API to communicate with the process, there currently is no plan to include linux or macOS support.
