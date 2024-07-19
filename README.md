@@ -14,7 +14,7 @@ This tool allows you to change your seed during the game while still enabling pr
 This tool allows you to change your seed during the game while still enabling progression, such as unlocking new spells and achievements.
 
 ### Why is this Tool Unique?
-Unlike the [Noita Seed Changer](https://steamcommunity.com/sharedfiles/filedetails/?id=2284931352) workshop mod, which prevents progression in the game, this tool allows progression and doesn't get detected by the game as a mod. Other alternatives, such as [RNG42/NoitaSeedChanger](https://github.com/RNG42/NoitaSeedChanger) and [Start with custom seed by Luffy](https://modworkshop.net/mod/25898) require some setup to use and need to be loaded before the game starts. This tool uniquely can be run after the game has already started and does not require additional files, simply put this tool will edit the game's current code instead of loading new mod code making it much more compatible for future updates. 
+Unlike the [Noita Seed Changer](https://steamcommunity.com/sharedfiles/filedetails/?id=2284931352) workshop mod, which prevents progression in the game, this tool allows progression and doesn't get detected by the game as a mod. Other alternatives, such as [RNG42/NoitaSeedChanger](https://github.com/RNG42/NoitaSeedChanger) and [Start with custom seed by Luffy](https://modworkshop.net/mod/25898) require some setup to use and need to be loaded before the game starts. This tool uniquely can be run after the game has already started and does not require additional files to run, this tool will edit the game's running code instead of making the game load additional code on start-up, making it much more compatible for future updates. 
 
 ### Features
 
