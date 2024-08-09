@@ -24,10 +24,15 @@ from virtual_memory_toolkit.process.process cimport CProcess, CProcess_init, CPr
 
 cdef inline CAppHandle* get_noita_handle():
     cdef char* window_title_substring = "Noita - Build"
-    return CAppHandle_from_title_substring(<const char*> window_title_substring)
+    return CAppHandle_from_title_substring(
+        <const char*> window_title_substring
+    )
 
 
-cdef inline CVirtualAddress* get_seed_address(CAppHandle* noita_handle, CModule* noita_module):
+cdef inline CVirtualAddress* get_seed_address(
+    CAppHandle* noita_handle, 
+    CModule* noita_module
+):
 
     if not noita_handle:
         return NULL
@@ -53,21 +58,34 @@ cdef inline CVirtualAddress* get_seed_address(CAppHandle* noita_handle, CModule*
         <unsigned char*>&c_bytes, 
         <size_t>len(py_bytes)
     )
-    CVirtualAddress_offset(seed_opcode_address, <long long>4)
+    CVirtualAddress_offset(
+        seed_opcode_address, 
+        <long long>4
+    )
     
-
     cdef int seed_address
 
-    if CVirtualAddress_read_int32_offset(seed_opcode_address, &seed_address, <long long> 1):
+    if CVirtualAddress_read_int32_offset(
+        seed_opcode_address, 
+        &seed_address, 
+        <long long> 1
+    ):
         CVirtualAddress_free(seed_opcode_address)
         return NULL
     
     CVirtualAddress_free(seed_opcode_address)
 
-    return CVirtualAddress_init(noita_handle, <void*> seed_address)
+    return CVirtualAddress_init(
+        noita_handle, 
+        <void*> seed_address
+    )
     
-
-cdef inline CVirtualAddress* get_seed_overwrite_address(CAppHandle* noita_handle, CModule* noita_module, CVirtualAddress* seed_address):
+cdef inline CVirtualAddress* get_seed_overwrite_address(
+    CAppHandle* noita_handle, 
+    CModule* noita_module, 
+    CVirtualAddress* 
+    seed_address
+):
     
     if not noita_handle:
         return NULL
@@ -82,11 +100,9 @@ cdef inline CVirtualAddress* get_seed_overwrite_address(CAppHandle* noita_handle
     cdef unsigned char byte2 = (seed_addr >> 16) & 0xFF
     cdef unsigned char byte3 = (seed_addr >> 24) & 0xFF
 
-    
     cdef unsigned char[5] c_bytes
 
     py_bytes = [0xc7, 0x05, byte0, byte1, byte2, byte3]
-
 
     for i, b in enumerate(py_bytes):
         c_bytes[i] = <unsigned char> b
